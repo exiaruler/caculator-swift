@@ -24,14 +24,86 @@ class Calculator {
     /// - Warning: The result may yield Int overflow.
     /// - SeeAlso: https://developer.apple.com/documentation/swift/int/2884663-addingreportingoverflow
     func add(no1: Int, no2: Int) -> Int {
-        return no1 + no2;
+        let result=no1+no2;
+        return result;
+    }
+    func minus(no1:Int,no2:Int)->Int{
+        let result=no1-no2;
+        return result;
     }
     
+    func times(no1:Int,no2:Int)->Int{
+        let result=no1*no2;
+        return result;
+        
+    }
+    
+    func divide(no1:Int,no2:Int)->Int{
+        let result=no1/no2;
+        return result;
+        
+    }
+    
+    func remainder(no1:Int,no2:Int)->Int{
+        let result=no1%no2;
+        return result;
+        
+    }
+    
+    // convert interger to string
+    func convert(value:Int)->String{
+        let convert = String(value);
+        return convert
+    }
+    
+   
+
+
+    
+    
+    /*
+    func getResult(i:Int)->Int{
+       // var value=i=currentResult;
+        return value;
+    }
+    */
     func calculate(args: [String]) -> String {
         // Todo: Calculate Result from the arguments. Replace dummyResult with your actual result;
-        let dummyResult = add(no1: 1, no2: 2);
+       
+        print(args);
+        let a = Int(args[0])
+        let b = Int(args[2])
+        let c = String(args[1])
+        var result = "0";
         
-        let result = String(dummyResult);
-        return(result)
+        if c == "+" {
+            let equation = add(no1:a!, no2: b!)
+            result = convert(value:equation)
+            return result;
+        } else {
+            if c == "-"{
+                let equation = minus(no1:a!, no2: b!)
+                result = convert(value:equation)
+                return result;
+            } else {
+                if c == "x"{
+                    let equation = times(no1:a!, no2: b!)
+                    result = convert(value:equation)
+                    return result;
+                } else {
+                    if c == "%"{
+                        let equation = remainder(no1:a!, no2: b!)
+                        result = convert(value:equation)
+                        return result;
+                    }
+                }
+                
+            }
+        }
+        
+    
+
+        
+        return result
     }
 }

@@ -11,7 +11,7 @@ import Foundation
 class Calculator {
     
     /// For multi-step calculation, it's helpful to persist existing result
-    var currentResult = 0;
+    var currentResult = "0";
     
     /// Perform Addition
     ///
@@ -23,6 +23,8 @@ class Calculator {
     ///
     /// - Warning: The result may yield Int overflow.
     /// - SeeAlso: https://developer.apple.com/documentation/swift/int/2884663-addingreportingoverflow
+    
+    // equations
     func add(no1: Int, no2: Int) -> Int {
         let result=no1+no2;
         return result;
@@ -56,6 +58,11 @@ class Calculator {
         return convert
     }
     
+    // organise more than 2 argument calculations
+    func organiseCalculate(args: [String])->String{
+        return "test"
+    }
+    
    
 
 
@@ -71,30 +78,41 @@ class Calculator {
         // Todo: Calculate Result from the arguments. Replace dummyResult with your actual result;
        
         print(args);
+        // variables
+        // first argument
         let a = Int(args[0])
+        // second argument
         let b = Int(args[2])
+        // sum indicator (+ or -)
         let c = String(args[1])
         var result = "0";
         
+        // equations
         if c == "+" {
             let equation = add(no1:a!, no2: b!)
-            result = convert(value:equation)
-            return result;
+            currentResult = convert(value:equation)
+            return currentResult;
         } else {
             if c == "-"{
                 let equation = minus(no1:a!, no2: b!)
-                result = convert(value:equation)
-                return result;
+                currentResult = convert(value:equation)
+                return currentResult;
             } else {
                 if c == "x"{
                     let equation = times(no1:a!, no2: b!)
-                    result = convert(value:equation)
-                    return result;
+                    currentResult = convert(value:equation)
+                    return currentResult;
                 } else {
                     if c == "%"{
                         let equation = remainder(no1:a!, no2: b!)
-                        result = convert(value:equation)
-                        return result;
+                        currentResult = convert(value:equation)
+                        return currentResult;
+                    } else {
+                        if c == "/"{
+                            let equation = divide(no1:a!, no2: b!)
+                            currentResult = convert(value:equation)
+                            return currentResult;
+                        }
                     }
                 }
                 

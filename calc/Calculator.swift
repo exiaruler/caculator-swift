@@ -58,25 +58,8 @@ class Calculator {
         return convert
     }
     
-    // organise more than 2 argument calculations
-    func organiseCalculate(args: [String])->String{
-        return "test"
-    }
-    
-   
-
-
-    
-    
-    /*
-    func getResult(i:Int)->Int{
-       // var value=i=currentResult;
-        return value;
-    }
-    */
-    func calculate(args: [String]) -> String {
-        // Todo: Calculate Result from the arguments. Replace dummyResult with your actual result;
-       
+    // returns the value of the calculation from input
+    func calculatingInput(args: [String])->String{
         print(args);
         // variables
         // first argument
@@ -85,7 +68,7 @@ class Calculator {
         let b = Int(args[2])
         // sum indicator (+ or -)
         let c = String(args[1])
-        var result = "0";
+     
         
         // equations
         if c == "+" {
@@ -122,6 +105,59 @@ class Calculator {
     
 
         
-        return result
+        return currentResult
+    }
+    
+   
+
+    func calculate(args: [String]) -> String {
+        // Todo: Calculate Result from the arguments. Replace dummyResult with your actual result;
+       
+        print(args);
+        // variables
+        // first argument
+        let a = Int(args[0])
+        // second argument
+        let b = Int(args[2])
+        // sum indicator (+ or -)
+        let c = String(args[1])
+     
+        
+        // equations
+        if c == "+" {
+            let equation = add(no1:a!, no2: b!)
+            currentResult = convert(value:equation)
+            return currentResult;
+        } else {
+            if c == "-"{
+                let equation = minus(no1:a!, no2: b!)
+                currentResult = convert(value:equation)
+                return currentResult;
+            } else {
+                if c == "x"{
+                    let equation = times(no1:a!, no2: b!)
+                    currentResult = convert(value:equation)
+                    return currentResult;
+                } else {
+                    if c == "%"{
+                        let equation = remainder(no1:a!, no2: b!)
+                        currentResult = convert(value:equation)
+                        return currentResult;
+                    } else {
+                        if c == "/"{
+                            let equation = divide(no1:a!, no2: b!)
+                            currentResult = convert(value:equation)
+                            return currentResult;
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+    
+
+        
+        return currentResult
     }
 }

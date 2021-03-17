@@ -75,14 +75,7 @@ class Calculator {
         }
         return false
     }
-    /*
-    func removeValueArray(array:String,item:String) ->String{
-        for element in array {
-            
-        }
-        return
-    }
-*/
+
     func findSum(value:[String])->String{
         var first:String = "";
         var second:String = "";
@@ -172,15 +165,11 @@ class Calculator {
         var no1: [String] = [];
         var sign: [String] = [];
         var no2: [String] = [];
+        var sums:[String] = [];
         let convert = args.joined()
-        print (convert)
         let splitting = convert.split(separator: " ")
-        print(args)
-        print(splitting)
-        // if the splitting has more than 3 objects aka e.g 3 + 4 x 5
-        if splitting.count > 3 {
-            
-           
+     
+        if splitting.count > 1 {
            // equation makeup
             var arg1:String = "" ;
             var arrangement:String = "";
@@ -189,9 +178,7 @@ class Calculator {
           
             // loops over splitting to sort objects into different arrays
             for splittings in splitting {
-                print("Value of for loop \(splittings)")
-              //  let characters = splittings.count
-               // print(characters)
+             //   print("Value of for loop \(splittings)")
                 // sort the first argument of the equation
                 if arg1.isEmpty && checkValue(value: String(splittings)) {
                     no1.insert(String (splittings), at: no1.endIndex)
@@ -207,7 +194,6 @@ class Calculator {
                     
                     
                 }
-                print(" value of in for loop \(splittings)")
                 
                 // sort arguments into sign array
                 if checkArgument(value: String(splittings)) {
@@ -221,11 +207,13 @@ class Calculator {
                 // check if there values in the equation make up
                 // clear value of the equation make
                 if !arg1.isEmpty && !arg2.isEmpty && !arrangement.isEmpty {
-                    print("true \(arg1) \(arrangement) \(arg2)")
+                    let makeSum:String = arg1 + arrangement + arg2
+                    print(makeSum)
+                    sums.insert(makeSum, at: sums.endIndex)
                     arg1 = ""
                     arg2 = ""
                     arrangement = ""
-                    print(arg1 + arrangement + arg2)
+                  //  print(arg1 + arrangement + arg2)
                     
                 }
                
@@ -234,18 +222,29 @@ class Calculator {
                 //print(arg1)
                // print(arg2)
                // print(arrangement)
-                print("array values ")
-                print(no1)
-                print (no2)
-                print(sign)
-         
+              
              
             }
+            print("array values ")
+            print(no1)
+            print (no2)
+            print(sign)
+            print(sums)
+     
             // calculate by looping through values
             while no1.count != 0 {
                 var first:String = "";
                 var second:String = "";
                 var indicator:String = "";
+             
+              /*
+            // find sum
+                var sum:String = ""
+                print(splitting)
+                for item in splitting {
+                    if it
+                }
+         */
                 
                 if no1.count != 0 {
                     // lops over first argument array
@@ -277,10 +276,10 @@ class Calculator {
                         }
                     }
                 }
-            
+                
                 indicator = String(sign.first!)
        
-               
+                
                 if !first.isEmpty && !indicator.isEmpty && !second.isEmpty {
 
                 sign.remove(at: 0)
@@ -301,28 +300,8 @@ class Calculator {
                 }
                 
             }
-          
-            
-            
-          
-            
-            
-            
-            
-        } else {
-         
-        // stores splitting objects into different arrays
-            no1.append(String(splitting[0]))
-            no2.append(String(splitting[2]))
-            sign.append(String(splitting[1]))
-        // retrieve object from arrays
-        let first = String(no1.first!)
-        let second = String(no2.first!)
-        let indicator = String(sign.first!)
-        currentResult = calculatingInput(args: [first,indicator,second])
-
-    
-}
+        }
+        currentResult = String(splitting[0])
         return currentResult
     }
 }

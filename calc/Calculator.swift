@@ -68,6 +68,16 @@ class Calculator {
         }
         return false;
     }
+    func checkSpecialArgument(value:[String])->Bool{
+     
+        for item in value {
+        if  value.contains("x") && value.count == 1  || value.contains("/") && value.count == 1 || value.contains("%") && value.count == 1 {
+            return true;
+        }
+        }
+        return false;
+    }
+    
     // check if the value is a number
     func checkValue(value:String)->Bool{
         if let _ = Int(value) {
@@ -76,38 +86,6 @@ class Calculator {
         return false
     }
 
-    func findSum(value:[String])->String{
-        var first:String = "";
-        var second:String = "";
-        var argument:String = "";
-        var sum:String = "";
-        for item in value {
-            if first.isEmpty && checkValue(value: item){
-                first = String(item);
-                break;
-            }
-            if second.isEmpty && checkValue(value: item){
-                first = String(item);
-                break;
-            }
-            
-            if argument.isEmpty && checkArgument(value:String (item)){
-                first = String(item);
-                break;
-            }
-            
-            // check for multiplcation,divsion and remainder equations and returns if positive
-            if !first.isEmpty && !second.isEmpty && !argument.isEmpty {
-                if argument.contains("x") || argument.contains("/"){
-                    sum = first + argument + second
-                    print(sum)
-                    return sum
-                }
-            }
-        }
-     
-       return sum
-    }
     
     // returns the value of the calculation from input
     func calculatingInput(args: [String])->String{
@@ -119,7 +97,17 @@ class Calculator {
         let b = Int(args[2])
         // sum indicator (+ or -)
         let c = String(args[1])
-     
+        let equationChoice = String(args[1])
+        /*
+        switch equationChoice {
+        case "+" :
+        let equation = add(no1:a!, no2: b!)
+        currentResult = convert(value:equation)
+        return currentResult;
+            
+        default: print(Error.self)
+        }
+     */
         
         // equations
         if c == "+" {
@@ -152,84 +140,44 @@ class Calculator {
                 
             }
         }
-        
-    
-
-        
         return currentResult
     }
     
    
 
     func calculate(args: [String]) -> String {
-        var no1: [String] = [];
-        var sign: [String] = [];
-        var no2: [String] = [];
-        var sums:[String] = [];
-        let convert = args.joined()
-        let splitting = convert.split(separator: " ")
-     
+        var no1: [String] = [];             // stores numbers
+        var sign: [String] = [];            // store arguments
+        var copy: [String] = [];            // copy of the splitting in String
+        var equationStart = -1              //
+        let convert = args.joined()         // convert input into joined
+        // splits the input by spaces into substring array
+        var splitting = convert.split(separator: " ")
+        // if splitting size bigger than 1
         if splitting.count > 1 {
-           // equation makeup
-            var arg1:String = "" ;
-            var arrangement:String = "";
-            var arg2:String = "";
-            
+         
           
-            // loops over splitting to sort objects into different arrays
+            // loops over splitting to sort objects into different 2 arrays
             for splittings in splitting {
              //   print("Value of for loop \(splittings)")
                 // sort the first argument of the equation
-                if arg1.isEmpty && checkValue(value: String(splittings)) {
+                if  checkValue(value: String(splittings)) {
                     no1.insert(String (splittings), at: no1.endIndex)
-                    arg1 = String(no1.last!)
-                 
-                } else
-                {
-                    // sort the second arrangement
-                    if arg2.isEmpty && checkValue(value: String(splittings)){
-                        no2.insert(String(splittings), at: no2.endIndex)
-                        arg2 = String(no2.last!)
-                    }
-                    
-                    
-                }
-                
-                // sort arguments into sign array
-                if checkArgument(value: String(splittings)) {
-                    
-                    sign.insert(String(splittings), at:sign.endIndex)
-                    arrangement = String(sign.last!)
+                    copy.insert (String (splittings), at: copy.endIndex)
                   
-                    
                 }
-                
-                // check if there values in the equation make up
-                // clear value of the equation make
-                if !arg1.isEmpty && !arg2.isEmpty && !arrangement.isEmpty {
-                    let makeSum:String = arg1 + arrangement + arg2
-                    print(makeSum)
-                    sums.insert(makeSum, at: sums.endIndex)
-                    arg1 = ""
-                    arg2 = ""
-                    arrangement = ""
-                  //  print(arg1 + arrangement + arg2)
-                    
-                }
-               
-                
-                
-                //print(arg1)
-               // print(arg2)
-               // print(arrangement)
-              
              
+                if checkArgument(value: String(splittings)) {
+                    sign.insert(String(splittings), at:sign.endIndex)
+                    copy.insert (String (splittings), at: copy.endIndex)
+                }
+       
             }
             print("array values ")
             print(no1)
-            print (no2)
             print(sign)
-            print(sums)
+            print(copy)
+         
      
             // calculate by looping through values
             while no1.count != 0 {
@@ -237,19 +185,48 @@ class Calculator {
                 var second:String = "";
                 var indicator:String = "";
              
-              /*
-            // find sum
-                var sum:String = ""
-                print(splitting)
-                for item in splitting {
-                    if it
+              
+            // find equation
+                var sumFirst:String = "";
+                var sumSecond:String = "";
+                var sumIndicator:String = "";
+            //find sum by looping over splitting
+                if sumFirst.isEmpty && sumSecond.isEmpty && sumIndicator.isEmpty {
+                    var position = -1
+                for item in copy {
+                    position+=1
+                    // find first argument of equation
+                    if checkValue(value: String(item)) && sumFirst.isEmpty {
+                        sumFirst = String(item)
+                        copy.remove(at: position)
+                        position = -1
+                        equationStart+=1
+                    }else {
+                        //find second argument of equation
+                    if checkValue(value: String(item)) && sumSecond.isEmpty {
+                        sumSecond = String(item)
+                        copy.remove(at: position)
+                        position = -1
+                    }
+                    }
+                    print(position)
+                    print(copy)
+                    // find argument indicator of equation
+                    if checkArgument(value: String(item)) && sumIndicator.isEmpty {
+                        sumIndicator = String(item)
+                        copy.remove(at: position)
+                        position = -1
+                        }
+                    }
                 }
-         */
                 
-                if no1.count != 0 {
-                    // lops over first argument array
+         
+                
+                if no1.count != 0 && !sumFirst.isEmpty && !sumSecond.isEmpty && !sumIndicator.isEmpty {
+                   
+                    // lops over first argument of the equation
                 for item in no1 {
-                    if first.isEmpty && !item.contains(first) {
+                    if first.isEmpty && item.contains(sumFirst) {
                     first = item
                         no1.remove(at: 0)
                        // break;
@@ -257,46 +234,42 @@ class Calculator {
                     
                 }
                 }
-                if no2.count != 0 {
-                    // loops over second argument array
-                    for item in no2 {
-                        if second.isEmpty && !item.contains(second) {
-                            second = item
-                            no2.remove(at: 0)
-                        //    break;
-                        }
-                        
-                    }
-                } else {
                     // if there no more items in no2 it finds arguments in no1 array
                     for item in no1 {
-                        if second.isEmpty  {
+                        if second.isEmpty && item.contains(sumSecond)  {
                             second = item
                             no1.remove(at: 0)
                         }
                     }
+                
+                
+                for item in sign {
+                    if indicator.isEmpty && item.contains(sumIndicator){
+               // indicator = String(sign.first!)
+                        indicator = item
+                        sign.remove(at: 0)
+                    }
                 }
                 
-                indicator = String(sign.first!)
-       
-                
                 if !first.isEmpty && !indicator.isEmpty && !second.isEmpty {
-
-                sign.remove(at: 0)
                 print(no1)
-                print(no2)
                 print(sign)
+                    // send objects for calculation
             currentResult = calculatingInput(args: [first,indicator,second])
-
-                
+                // check if there any numbers left in the array
                     if no1.count != 0  {
                         print(currentResult)
                     no1.insert(String(currentResult), at: 0)
+                        print(equationStart)
+                    copy.insert(currentResult, at: equationStart)
+                        equationStart = -1
                     print("after")
+                        print(copy)
                     print(no1)
-                    print(no2)
                     print(sign)
-                }
+                    } else {
+                        return currentResult
+                    }
                 }
                 
             }

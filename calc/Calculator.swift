@@ -193,6 +193,42 @@ class Calculator {
             //find sum by looping over splitting
                 if sumFirst.isEmpty && sumSecond.isEmpty && sumIndicator.isEmpty {
                     var position = -1
+                    // find multiplication,divsion,/ and % equations
+                    /*
+                    for item in copy {
+                        position+=1
+                        // find first argument of equation
+                        if checkValue(value: String(item)) && sumFirst.isEmpty{
+                            sumFirst = String(item)
+                            copy.remove(at: position)
+                            position = -1
+                            equationStart+=1
+                        }
+                            //find second argument of equation
+                        if checkValue(value: String(item)) && !first.isEmpty  {
+                            sumSecond = String(item)
+                            copy.remove(at: position)
+                            position = -1
+                        }
+                        
+                        print(position)
+                        print(copy)
+                        // find argument indicator of equation
+                        if item.contains("x")  {
+                            sumIndicator = String(item)
+                            copy.remove(at: position)
+                            position = -1
+                            }
+                        if !sumFirst.isEmpty && !sumSecond.isEmpty  && !sumIndicator.isEmpty && sumIndicator.contains("x"){
+                            break;
+                        }else {
+                            sumFirst = ""
+                            sumSecond = ""
+                            sumIndicator = ""
+                        }
+                    }
+    */
+                    // find equations that contain + and -
                 for item in copy {
                     position+=1
                     // find first argument of equation
@@ -216,7 +252,7 @@ class Calculator {
                         sumIndicator = String(item)
                         copy.remove(at: position)
                         position = -1
-                        }
+                    }
                     }
                 }
                 
@@ -252,8 +288,6 @@ class Calculator {
                 }
                 
                 if !first.isEmpty && !indicator.isEmpty && !second.isEmpty {
-                print(no1)
-                print(sign)
                     // send objects for calculation
             currentResult = calculatingInput(args: [first,indicator,second])
                 // check if there any numbers left in the array
@@ -261,6 +295,7 @@ class Calculator {
                         print(currentResult)
                     no1.insert(String(currentResult), at: 0)
                         print(equationStart)
+                        // insert result in the location where the equation started 
                     copy.insert(currentResult, at: equationStart)
                         equationStart = -1
                     print("after")

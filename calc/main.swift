@@ -14,7 +14,6 @@ args.removeFirst() // remove the name of the program
 // Retrieve User Input
 //let no1 = args[0]; // Sample Code Only! Update Required!
 //let operator = args[1]; // Sample Code Only! Update Required!
-//let sign=args[1];
 //let no2 = args[2]; // Sample Code Only! Update Required!
 
 
@@ -24,17 +23,20 @@ let calculator = Calculator();
 
 
 
+
 // input equation
-if let read = readLine() {
+ let read = readLine()
 
-
+print(read!)
 // Calculate the result
-    let result = calculator.calculate(args:[read]);
+//    let result = calculator.calculate(args:[read]);
+    
+
 
 
 //print(" The result is \(result)")
-print(result)
-}
+//print(result)
+
 
 
 

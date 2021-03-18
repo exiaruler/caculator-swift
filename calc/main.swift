@@ -20,22 +20,20 @@ args.removeFirst() // remove the name of the program
 
 // Initialize a Calculator object
 let calculator = Calculator();
-
-
-
-
+let read = readLine()
+let input = args.joined(separator: " ")
+print(input)
 // input equation
- let read = readLine()
 
-print(read!)
+
 // Calculate the result
-//    let result = calculator.calculate(args:[read]);
+let result = calculator.calculate(args:[read!]);
     
 
 
 
 //print(" The result is \(result)")
-//print(result)
+print(result)
 
 
 

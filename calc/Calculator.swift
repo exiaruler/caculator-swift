@@ -68,10 +68,10 @@ class Calculator {
         }
         return false;
     }
-    func checkSpecialArgument(value:[String])->Bool{
+    func checkSpecialArgument(value:Array<String>)->Bool{
      
         for item in value {
-        if  value.contains("x") && value.count == 1  || value.contains("/") && value.count == 1 || value.contains("%") && value.count == 1 {
+        if  item.contains("x") && item.count == 1  || item.contains("/") && item.count == 1 || item.contains("%") && value.count == 1 {
             return true;
         }
         }
@@ -155,7 +155,7 @@ class Calculator {
         var splitting = convert.split(separator: " ")
         // if splitting size bigger than 1
         if splitting.count > 1 {
-         
+         print(splitting)
           
             // loops over splitting to sort objects into different 2 arrays
             for splittings in splitting {
@@ -181,77 +181,82 @@ class Calculator {
      
             // calculate by looping through values
             while no1.count != 0 {
+                
                 var first:String = "";
                 var second:String = "";
                 var indicator:String = "";
-             
-              
+                
             // find equation
                 var sumFirst:String = "";
                 var sumSecond:String = "";
                 var sumIndicator:String = "";
-            //find sum by looping over splitting
+            // find sum by looping over splitting
                 if sumFirst.isEmpty && sumSecond.isEmpty && sumIndicator.isEmpty {
-                    var position = -1
-                    // find multiplication,divsion,/ and % equations
-                    /*
+                    var positionFirst = -1
+                    var positionSecond = -1
+                    var positionArg = -1
+                    // find multiplication,divsion and remainder equations
+                    if checkSpecialArgument(value: copy){
                     for item in copy {
-                        position+=1
+                        positionFirst+=1
+                        positionSecond+=1
+                        positionArg+=1
                         // find first argument of equation
                         if checkValue(value: String(item)) && sumFirst.isEmpty{
                             sumFirst = String(item)
-                            copy.remove(at: position)
-                            position = -1
+                          
                             equationStart+=1
-                        }
+                        } else {
                             //find second argument of equation
-                        if checkValue(value: String(item)) && !first.isEmpty  {
+                        if checkValue(value: String(item)) && sumSecond.isEmpty  {
                             sumSecond = String(item)
-                            copy.remove(at: position)
-                            position = -1
+                      
                         }
-                        
-                        print(position)
+                        }
                         print(copy)
                         // find argument indicator of equation
-                        if item.contains("x")  {
+                        if checkArgument(value: item)  {
                             sumIndicator = String(item)
-                            copy.remove(at: position)
-                            position = -1
+                       
                             }
-                        if !sumFirst.isEmpty && !sumSecond.isEmpty  && !sumIndicator.isEmpty && sumIndicator.contains("x"){
-                            break;
-                        }else {
-                            sumFirst = ""
-                            sumSecond = ""
-                            sumIndicator = ""
+                        if !sumFirst.isEmpty && !sumSecond.isEmpty  && !sumIndicator.isEmpty {
+                            if sumIndicator.contains("x") {
+                                copy.remove(at: positionFirst)
+                                copy.remove(at: positionSecond)
+                                copy.remove(at: positionArg)
+                                break;
+                            } else {
+                                sumFirst = ""
+                                sumSecond = ""
+                                sumIndicator = ""
+                            }
                         }
                     }
-    */
+                    }
                     // find equations that contain + and -
                 for item in copy {
-                    position+=1
+                    positionFirst+=1
                     // find first argument of equation
                     if checkValue(value: String(item)) && sumFirst.isEmpty {
                         sumFirst = String(item)
-                        copy.remove(at: position)
-                        position = -1
+                        copy.remove(at: positionFirst)
+                        positionFirst = -1
                         equationStart+=1
                     }else {
                         //find second argument of equation
                     if checkValue(value: String(item)) && sumSecond.isEmpty {
                         sumSecond = String(item)
-                        copy.remove(at: position)
-                        position = -1
+                        copy.remove(at: positionFirst)
+                        positionFirst = -1
                     }
                     }
-                    print(position)
+                    print(positionFirst)
                     print(copy)
                     // find argument indicator of equation
                     if checkArgument(value: String(item)) && sumIndicator.isEmpty {
                         sumIndicator = String(item)
-                        copy.remove(at: position)
-                        position = -1
+                        copy.remove(at: positionFirst)
+                        positionFirst = -1
                     }
                     }
                 }

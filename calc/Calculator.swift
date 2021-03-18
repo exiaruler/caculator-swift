@@ -68,6 +68,7 @@ class Calculator {
         }
         return false;
     }
+    // check array for x,/ and %
     func checkSpecialArgument(value:Array<String>)->Bool{
      
         for item in value {
@@ -89,7 +90,6 @@ class Calculator {
     
     // returns the value of the calculation from input
     func calculatingInput(args: [String])->String{
-        print(args);
         // variables
         // first argument
         let a = Int(args[0])
@@ -155,11 +155,10 @@ class Calculator {
         var splitting = convert.split(separator: " ")
         // if splitting size bigger than 1
         if splitting.count > 1 {
-         print(splitting)
+     
           
             // loops over splitting to sort objects into different 2 arrays
             for splittings in splitting {
-             //   print("Value of for loop \(splittings)")
                 // sort the first argument of the equation
                 if  checkValue(value: String(splittings)) {
                     no1.insert(String (splittings), at: no1.endIndex)
@@ -173,10 +172,7 @@ class Calculator {
                 }
        
             }
-            print("array values ")
-            print(no1)
-            print(sign)
-            print(copy)
+         
          
      
             // calculate by looping through values
@@ -195,39 +191,31 @@ class Calculator {
                     var positionFirst = -1
                     var positionSecond = -1
                     var positionArg = -1
+                    
                     // find multiplication,divsion and remainder equations
                     if checkSpecialArgument(value: copy){
                     for item in copy {
-                        positionFirst+=1
-                        positionSecond+=1
                         positionArg+=1
-                        // find first argument of equation
-                        if checkValue(value: String(item)) && sumFirst.isEmpty{
-                            sumFirst = String(item)
-                          
-                            equationStart+=1
-                        } else {
-                            //find second argument of equation
-                        if checkValue(value: String(item)) && sumSecond.isEmpty  {
-                            sumSecond = String(item)
-                      
-                        }
-                        }
-                        print(copy)
                         // find argument indicator of equation
                         if checkArgument(value: item)  {
                             sumIndicator = String(item)
-                       
                             }
-                        if !sumFirst.isEmpty && !sumSecond.isEmpty  && !sumIndicator.isEmpty {
-                            if sumIndicator.contains("x") {
+ 
+                        if !sumIndicator.isEmpty {
+                            if sumIndicator.contains("x") || sumIndicator.contains("/") || sumIndicator.contains("%"){
+                                // finds objects position in the array
+                                positionFirst = positionArg-1
+                                positionSecond = positionArg+1
+                                equationStart = positionFirst
+                                // get values from the positions
+                                sumFirst = String( copy[positionFirst])
+                                sumSecond = String(copy[positionArg+1])
+                             // removes elements for the sum
                                 copy.remove(at: positionFirst)
-                                copy.remove(at: positionSecond)
-                                copy.remove(at: positionArg)
+                                copy.remove(at: positionSecond-1)
+                                copy.remove(at: positionArg-1)
                                 break;
                             } else {
-                                sumFirst = ""
-                                sumSecond = ""
                                 sumIndicator = ""
                             }
                         }
@@ -250,8 +238,8 @@ class Calculator {
                         positionFirst = -1
                     }
                     }
-                    print(positionFirst)
-                    print(copy)
+                    //print(positionFirst)
+                    
                     // find argument indicator of equation
                     if checkArgument(value: String(item)) && sumIndicator.isEmpty {
                         sumIndicator = String(item)
@@ -262,51 +250,56 @@ class Calculator {
                 }
                 
          
-                
+         
                 if no1.count != 0 && !sumFirst.isEmpty && !sumSecond.isEmpty && !sumIndicator.isEmpty {
-                   
-                    // lops over first argument of the equation
+                    var firstDelete = -1
+                    var secondDelete = -1
+                    var indicatorDelete = -1
+                    // lops over first argument of the equation to find the value
                 for item in no1 {
-                    if first.isEmpty && item.contains(sumFirst) {
+                    firstDelete+=1
+                  
+                    if first.isEmpty && item == sumFirst {
                     first = item
-                        no1.remove(at: 0)
-                       // break;
+                        no1.remove(at: firstDelete)
+                     
                     }
                     
                 }
-                }
-                    // if there no more items in no2 it finds arguments in no1 array
+                
+                    // lops over second argument of the equation to find the value
                     for item in no1 {
-                        if second.isEmpty && item.contains(sumSecond)  {
+                        secondDelete+=1
+                      
+                        if second.isEmpty && item == sumSecond  {
                             second = item
-                            no1.remove(at: 0)
+                            no1.remove(at: secondDelete)
                         }
                     }
                 
-                
+                // loops over sign to find the argument
                 for item in sign {
+                    indicatorDelete+=1
                     if indicator.isEmpty && item.contains(sumIndicator){
-               // indicator = String(sign.first!)
                         indicator = item
-                        sign.remove(at: 0)
+                        sign.remove(at: indicatorDelete)
                     }
                 }
-                
+                }
+                // when equation is completed it calculates
                 if !first.isEmpty && !indicator.isEmpty && !second.isEmpty {
-                    // send objects for calculation
+                    // calculation
             currentResult = calculatingInput(args: [first,indicator,second])
+                    
                 // check if there any numbers left in the array
                     if no1.count != 0  {
-                        print(currentResult)
+                   
                     no1.insert(String(currentResult), at: 0)
-                        print(equationStart)
+                       
                         // insert result in the location where the equation started 
                     copy.insert(currentResult, at: equationStart)
                         equationStart = -1
-                    print("after")
-                        print(copy)
-                    print(no1)
-                    print(sign)
+                 
                     } else {
                         return currentResult
                     }

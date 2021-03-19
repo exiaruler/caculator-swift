@@ -8,32 +8,27 @@
 
 import Foundation
 
+// terminal input
 var args = ProcessInfo.processInfo.arguments
 args.removeFirst() // remove the name of the program
-
-// Retrieve User Input
-//let no1 = args[0]; // Sample Code Only! Update Required!
-//let operator = args[1]; // Sample Code Only! Update Required!
-//let no2 = args[2]; // Sample Code Only! Update Required!
-
 
 
 // Initialize a Calculator object
 let calculator = Calculator();
+let validation = Validation();
 
-let input = args.joined(separator: " ")
+// validate args before conversion 
+try validation.validateInput(values: args) 
+    // turn array to String to input
+    let input = args.joined(separator: " ")
+    // Calculate the result
+    let result = calculator.calculate(args:[input]);
 
-// input equation
-
-
-// Calculate the result
-let result = calculator.calculate(args:[input]);
-    
-
-
+    print(result)
 
 
-print(result)
+
+
 
 
 

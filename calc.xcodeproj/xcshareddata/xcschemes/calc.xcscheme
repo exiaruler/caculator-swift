@@ -87,30 +87,6 @@
             argument = "3"
             isEnabled = "YES">
          </CommandLineArgument>
-         <CommandLineArgument
-            argument = "var args = ProcessInfo.processInfo.arguments"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "args.removeFirst()"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "let calculator = Calculator();"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "let response = readLine()"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "let input = args.joined(separator: &quot; &quot;)"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "if input.count &gt; 2 {&#10;// Calculate the result&#10;let result = calculator.calculate(args:[input]);&#10;    &#10;&#10;&#10;&#10;&#10;print(result)&#10;}"
-            isEnabled = "NO">
-         </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
    <ProfileAction

@@ -17,14 +17,15 @@ args.removeFirst() // remove the name of the program
 let calculator = Calculator();
 let validation = Validation();
 
-// validate args before conversion 
-try validation.validateInput(values: args) 
+// validate args before conversion
+try validation.validateInput(values: args)
     // turn array to String to input
     let input = args.joined(separator: " ")
     // Calculate the result
     let result = calculator.calculate(args:[input]);
-
+// output result
     print(result)
+
 
 
 

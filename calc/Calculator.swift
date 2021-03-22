@@ -85,61 +85,47 @@ class Calculator {
         // sum indicator (+ or -)
         let c = String(args[1])
         let equationChoice = String(args[1])
-        /*
+        
+        // equations to use
         switch equationChoice {
         case "+" :
         let equation = add(no1:a!, no2: b!)
         currentResult = convert(value:equation)
         return currentResult;
             
-        default: print(Error.self)
-        }
-     */
-        
-        // equations
-        if c == "+" {
-            let equation = add(no1:a!, no2: b!)
+        case "-" : let equation = minus(no1:a!, no2: b!)
             currentResult = convert(value:equation)
             return currentResult;
-        } else {
-            if c == "-"{
-                let equation = minus(no1:a!, no2: b!)
-                currentResult = convert(value:equation)
-                return currentResult;
-            } else {
-                if c == "x"{
-                    let equation = times(no1:a!, no2: b!)
-                    currentResult = convert(value:equation)
-                    return currentResult;
-                } else {
-                    if c == "%"{
-                        let equation = remainder(no1:a!, no2: b!)
-                        currentResult = convert(value:equation)
-                        return currentResult;
-                    } else {
-                        if c == "/"{
-                            let equation = divide(no1:a!, no2: b!)
-                            currentResult = convert(value:equation)
-                            return currentResult;
-                        }
-                    }
-                }
-                
-            }
+            
+        case "x": let equation = times(no1:a!, no2: b!)
+            currentResult = convert(value:equation)
+            return currentResult;
+            
+        case "%" : let equation = remainder(no1:a!, no2: b!)
+            currentResult = convert(value:equation)
+            return currentResult;
+            
+        case "/" :  let equation = divide(no1:a!, no2: b!)
+            currentResult = convert(value:equation)
+            return currentResult;
+            
+            
+        default: print(Error.self)
         }
+     
         return currentResult
     }
     
    
 
     func calculate(args: [String]) -> String {
-        var no1: [String] = [];             // stores numbers
+        var numbers: [String] = [];             // stores numbers
         var sign: [String] = [];            // store arguments
         var copy: [String] = [];            // copy of the splitting in String
         var equationStart = -1              //
         let convert = args.joined()         // convert input into joined
         // splits the input by spaces into substring array
-        var splitting = convert.split(separator: " ")
+        let splitting = convert.split(separator: " ")
         // if splitting size bigger than 1
         if splitting.count > 1 {
      
@@ -148,7 +134,7 @@ class Calculator {
             for splittings in splitting {
                 // sort the first argument of the equation
                 if  checkValue(value: String(splittings)) {
-                    no1.insert(String (splittings), at: no1.endIndex)
+                    numbers.insert(String (splittings), at: numbers.endIndex)
                     copy.insert (String (splittings), at: copy.endIndex)
                   
                 }
@@ -163,7 +149,7 @@ class Calculator {
          
      
             // calculate by looping through values
-            while no1.count != 0 {
+            while numbers.count != 0 {
                 
                 var first:String = "";
                 var second:String = "";
@@ -225,7 +211,7 @@ class Calculator {
                         positionFirst = -1
                     }
                     }
-                    //print(positionFirst)
+             
                     
                     // find argument indicator of equation
                     if checkArgument(value: String(item)) && sumIndicator.isEmpty {
@@ -234,33 +220,34 @@ class Calculator {
                         positionFirst = -1
                     }
                     }
+                    
                 }
                 
          
-         
-                if no1.count != 0 && !sumFirst.isEmpty && !sumSecond.isEmpty && !sumIndicator.isEmpty {
+                // find values and calculate
+                if numbers.count != 0 && !sumFirst.isEmpty && !sumSecond.isEmpty && !sumIndicator.isEmpty {
                     var firstDelete = -1
                     var secondDelete = -1
                     var indicatorDelete = -1
                     // lops over first argument of the equation to find the value
-                for item in no1 {
+                for item in numbers {
                     firstDelete+=1
                   
                     if first.isEmpty && item == sumFirst {
                     first = item
-                        no1.remove(at: firstDelete)
+                        numbers.remove(at: firstDelete)
                      
                     }
                     
                 }
                 
                     // lops over second argument of the equation to find the value
-                    for item in no1 {
+                    for item in numbers {
                         secondDelete+=1
                       
                         if second.isEmpty && item == sumSecond  {
                             second = item
-                            no1.remove(at: secondDelete)
+                            numbers.remove(at: secondDelete)
                         }
                     }
                 
@@ -279,11 +266,11 @@ class Calculator {
             currentResult = calculatingInput(args: [first,indicator,second])
                     
                 // check if there any numbers left in the array
-                    if no1.count != 0  {
+                    if numbers.count != 0  {
                    
-                    no1.insert(String(currentResult), at: 0)
+                    numbers.insert(String(currentResult), at: 0)
                        
-                        // insert result in the location where the equation started 
+                        // insert result in the location where the equation started
                     copy.insert(currentResult, at: equationStart)
                         equationStart = -1
                  
@@ -294,7 +281,9 @@ class Calculator {
                 
             }
         }
+        // return result if 1 value result is passed
         currentResult = String(splitting[0])
         return currentResult
     }
 }
+
